@@ -55,20 +55,20 @@ contract UniswapV3Pool is IUniswapV3Pool, NoDelegateCall {
 
     struct Slot0 {
         // the current price
-        uint160 sqrtPriceX96;
+        uint160 sqrtPriceX96; // 20字节
         // the current tick
-        int24 tick;
+        int24 tick; // 3 字节
         // the most-recently updated index of the observations array
-        uint16 observationIndex;
+        uint16 observationIndex; //2 字节
         // the current maximum number of observations that are being stored
-        uint16 observationCardinality;
+        uint16 observationCardinality; // 2字节
         // the next maximum number of observations to store, triggered in observations.write
-        uint16 observationCardinalityNext;
+        uint16 observationCardinalityNext; // 2字节
         // the current protocol fee as a percentage of the swap fee taken on withdrawal
         // represented as an integer denominator (1/x)%
-        uint8 feeProtocol;
+        uint8 feeProtocol; // 1字节
         // whether the pool is locked
-        bool unlocked;
+        bool unlocked; // 1字节
     }
     /// @inheritdoc IUniswapV3PoolState
     Slot0 public override slot0;
@@ -103,7 +103,7 @@ contract UniswapV3Pool is IUniswapV3Pool, NoDelegateCall {
     /// we use balance checks to determine the payment status of interactions such as mint, swap and flash.
     modifier lock() {
         require(slot0.unlocked, 'LOK');
-        slot0.unlocked = false;
+        slot0.unlocked = false; // 可重入
         _;
         slot0.unlocked = true;
     }

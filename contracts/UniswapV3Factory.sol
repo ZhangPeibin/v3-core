@@ -23,10 +23,13 @@ contract UniswapV3Factory is IUniswapV3Factory, UniswapV3PoolDeployer, NoDelegat
         owner = msg.sender;
         emit OwnerChanged(address(0), msg.sender);
 
+        // 0.05%
         feeAmountTickSpacing[500] = 10;
         emit FeeAmountEnabled(500, 10);
+        // 0.30%
         feeAmountTickSpacing[3000] = 60;
         emit FeeAmountEnabled(3000, 60);
+        // 1.00%
         feeAmountTickSpacing[10000] = 200;
         emit FeeAmountEnabled(10000, 200);
     }
